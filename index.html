@@ -852,7 +852,8 @@
     font-size:16px; font-family:var(--sans); cursor:pointer; transition:opacity .2s;
     letter-spacing:.05em;
   }
-  .form-submit:hover{ opacity:.75; }
+  .form-submit:hover:not(:disabled){ opacity:.75; }
+  .form-submit:disabled{ background:#ccc; cursor:not-allowed; opacity:1; }
 
   .map-wrap{
     margin-top:64px;
@@ -1688,7 +1689,7 @@
             <input type="checkbox" id="privacy" required>
             <label for="privacy">個人情報の取り扱いに同意します（いただいた情報は、お問い合わせ対応のみに使用します）</label>
           </div>
-          <button type="submit" class="form-submit">内容を送信する →</button>
+          <button type="submit" class="form-submit" id="contactSubmit" disabled>内容を送信する →</button>
         </form>
       </div>
     </div>
@@ -1816,6 +1817,25 @@
   // initial route
   const initial = (location.hash||'').replace('#','') || 'home';
   go(initial);
+
+  // ----- Contact form validation -----
+  (function(){
+    const form = document.querySelector('#page-contact form');
+    if(!form) return;
+    const btn = document.getElementById('contactSubmit');
+    function validate(){
+      const name    = form.querySelector('[name="name"]').value.trim();
+      const email   = form.querySelector('[name="email"]').value.trim();
+      const datetime= form.querySelector('[name="datetime"]').value.trim();
+      const message = form.querySelector('[name="message"]').value.trim();
+      const category= form.querySelectorAll('[name="category"]:checked').length > 0;
+      const privacy = document.getElementById('privacy').checked;
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      btn.disabled = !(name && emailOk && datetime && message && category && privacy);
+    }
+    form.addEventListener('input', validate);
+    form.addEventListener('change', validate);
+  })();
 </script>
 
 </body>
