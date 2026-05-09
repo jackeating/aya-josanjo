@@ -806,6 +806,54 @@
   .hours-table .closed{color:var(--ink-mute)}
   .hours-table .open{color:var(--ink); font-weight:500}
 
+  /* Mail Form */
+  .mail-form-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--r-lg);
+    padding:40px; box-shadow:var(--shadow); max-width:720px; margin:0 auto;
+  }
+  @media (max-width:880px){ .mail-form-card{ padding:24px; } }
+  .form-field{ margin-bottom:22px; }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:600px){ .form-row{ grid-template-columns:1fr; } }
+  .form-label{
+    display:flex; align-items:center; gap:8px;
+    font-size:14px; font-weight:500; margin-bottom:8px; color:var(--ink);
+  }
+  .badge-req{
+    font-size:11px; background:#FDE8EA; color:#C0545F;
+    padding:2px 8px; border-radius:99px; font-weight:500;
+  }
+  .badge-opt{
+    font-size:11px; background:#f0f0f0; color:var(--ink-mute);
+    padding:2px 8px; border-radius:99px; font-weight:500;
+  }
+  .form-input,.form-textarea{
+    width:100%; padding:12px 16px; box-sizing:border-box;
+    border:1px solid var(--line); border-radius:10px;
+    font-family:var(--sans); font-size:16px; color:var(--ink);
+    background:#fafafa; transition:border-color .2s;
+  }
+  .form-input:focus,.form-textarea:focus{
+    outline:none; border-color:var(--pink-deep); background:#fff;
+  }
+  .form-textarea{ min-height:140px; resize:vertical; }
+  .checkbox-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px 16px; margin-top:4px; }
+  @media (max-width:600px){ .checkbox-grid{ grid-template-columns:1fr 1fr; } }
+  .check-label{ display:flex; align-items:center; gap:8px; font-size:15px; cursor:pointer; }
+  .check-label input[type="checkbox"]{ width:18px; height:18px; accent-color:var(--pink-deep); flex-shrink:0; }
+  .privacy-row{
+    display:flex; align-items:flex-start; gap:10px;
+    font-size:13px; color:var(--ink-soft); margin-bottom:28px;
+  }
+  .privacy-row input{ margin-top:2px; width:16px; height:16px; flex-shrink:0; accent-color:var(--ink); }
+  .form-submit{
+    display:block; width:100%; background:var(--ink); color:#fff;
+    border:none; border-radius:99px; padding:16px 32px;
+    font-size:16px; font-family:var(--sans); cursor:pointer; transition:opacity .2s;
+    letter-spacing:.05em;
+  }
+  .form-submit:hover{ opacity:.75; }
+
   .map-wrap{
     margin-top:64px;
     border-radius:var(--r-lg);
@@ -1590,7 +1638,65 @@
         </div>
       </div>
 
-      <!-- Map -->
+    </div>
+  </section>
+
+  <!-- Mail Form -->
+  <section>
+    <div class="container">
+      <div style="text-align:center; margin-bottom:48px;">
+        <span class="eyebrow" style="justify-content:center">MAIL FORM</span>
+        <h2 class="section-title section-title-jp">メールでのお問い合わせ</h2>
+        <p style="color:var(--ink-soft);">LINE・DMの他、こちらのフォームからもご相談いただけます。<br>2〜3営業日以内にメールにてお返事いたします。</p>
+      </div>
+      <div class="mail-form-card">
+        <form action="https://formspree.io/f/saayanmy@mail.com" method="POST">
+          <div class="form-field">
+            <label class="form-label">お名前 <span class="badge-req">必須</span></label>
+            <input type="text" name="name" class="form-input" placeholder="例）山田 花子" required>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">メールアドレス <span class="badge-req">必須</span></label>
+              <input type="email" name="email" class="form-input" placeholder="例）name@example.com" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label">お電話番号 <span class="badge-opt">任意</span></label>
+              <input type="tel" name="phone" class="form-input" placeholder="例）090-1234-5678">
+            </div>
+          </div>
+          <div class="form-field">
+            <div class="form-label">ご相談カテゴリ <span class="badge-req">必須</span></div>
+            <div class="checkbox-grid">
+              <label class="check-label"><input type="checkbox" name="category" value="妊産婦保健相談"> 妊産婦保健相談</label>
+              <label class="check-label"><input type="checkbox" name="category" value="育児相談"> 育児相談</label>
+              <label class="check-label"><input type="checkbox" name="category" value="お悩み相談"> お悩み相談</label>
+              <label class="check-label"><input type="checkbox" name="category" value="いのちの授業"> いのちの授業</label>
+              <label class="check-label"><input type="checkbox" name="category" value="パパ・祖父母からも"> パパ・祖父母からも</label>
+              <label class="check-label"><input type="checkbox" name="category" value="その他"> その他</label>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">ご希望日時の候補 <span class="badge-req">必須</span></label>
+            <input type="text" name="datetime" class="form-input" placeholder="例）5月15日（水）午前、5月17日（土）午後 など（2〜3個）" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label">ご相談内容 <span class="badge-req">必須</span></label>
+            <textarea name="message" class="form-textarea" placeholder="お悩みどうぞ気兼ねなく、お気軽に、自由にご記入ください。" required></textarea>
+          </div>
+          <div class="privacy-row">
+            <input type="checkbox" id="privacy" required>
+            <label for="privacy">個人情報の取り扱いに同意します（いただいた情報は、お問い合わせ対応のみに使用します）</label>
+          </div>
+          <button type="submit" class="form-submit">内容を送信する →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section>
+    <div class="container">
       <a href="https://maps.google.com/?q=大阪府堺市堺区大仙中町14-18" target="_blank" rel="noopener" class="map-link-wrap">
         <div class="map-wrap" style="cursor:pointer;">
           <div class="map-bg"></div>
@@ -1613,7 +1719,6 @@
     <div class="container">
       <h2>はじめての方も、どうぞ安心してお声がけください。</h2>
       <p>1時間、ゆっくりお話しいたしましょう。</p>
-      <a class="btn btn-primary" href="#" onclick="event.preventDefault();">LINE で相談する</a>
     </div>
   </section>
 </main>
